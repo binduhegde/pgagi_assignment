@@ -23,9 +23,11 @@ if "chat_ended" not in st.session_state:
 if "chat" not in st.session_state:
     st.session_state["chat"] = model.start_chat()
 
+# set the title of the streamlit app
 title = '<div style="background: linear-gradient(to right,#F9C58D,#F492F0); color: transparent; color: black; font-family: Helvetica; font-weight: bold; font-size: 40px; text-align: center; padding: 30px; letter-spacing:1px; width: 100%; margin-bottom: 20px;"><h2>TalentScout AI Interview assistant</h2></div>'
 st.markdown(title, unsafe_allow_html=True)
 
+# initially, record contact information of the candidate
 if not st.session_state["show_chatbot"]:
     name = st.text_input("Please enter your name")
     contact_no = st.text_input("Please enter your contact number")
@@ -34,10 +36,14 @@ if not st.session_state["show_chatbot"]:
     years_of_exp = st.number_input("How many years of experience do you have?", step=1)
     submit_button = st.button("Submit")
     
+    # if the user hits submit
     if submit_button:
+        # make sure all the information is filled
         if not name or not contact_no or not location:
             st.error("Please fill out all the information")
+        # all the info is filled
         else:
+            # store the info in session states
             st.session_state["user_details"] = {
                 "name": name,
                 "contact_no": contact_no,
@@ -45,6 +51,7 @@ if not st.session_state["show_chatbot"]:
                 "position": position,
                 "years_of_exp": years_of_exp,
             }
+            # setting this to true leads to the appearence of the chatbot
             st.session_state["show_chatbot"] = True
             
             # Generate initial chatbot prompt
@@ -66,8 +73,10 @@ if not st.session_state["show_chatbot"]:
             
             Begin the interview.
             """
+            # get the initial respose of the LLM
             response = st.session_state["chat"].send_message(prompt)
             st.session_state["messages"] = [{"role": "assistant", "content": response.text}]
+            # clear the screen 
             st.rerun()
 else:
     # Display chat history
