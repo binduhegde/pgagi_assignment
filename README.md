@@ -1,6 +1,8 @@
 TalentScout AI Interview Assistant
 ==================================
 
+Please find the demo video here: https://drive.google.com/file/d/1K1dlMu02XMQXt2TH9PAkiraX1OY3Jqcy/view?usp=sharing
+
 Project Overview:
 -----------------
 
